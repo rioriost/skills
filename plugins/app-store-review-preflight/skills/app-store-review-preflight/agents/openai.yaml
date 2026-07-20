@@ -1,0 +1,4 @@
+interface:
+  display_name: "App Store Review Preflight"
+  short_description: "Audit App Store submissions before review"
+  default_prompt: "$app-store-review-preflightを使って、App Store Connectの提出内容をApple公式ガイドラインに照らして監査し、送信はしないでください。"

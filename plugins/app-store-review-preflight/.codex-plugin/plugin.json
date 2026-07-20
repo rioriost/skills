@@ -1,0 +1,28 @@
+{
+  "name": "app-store-review-preflight",
+  "version": "0.1.0",
+  "description": "Audit App Store submissions against Apple's current official review requirements before submission.",
+  "author": {
+    "name": "Rio Fujita",
+    "url": "https://github.com/rioriost"
+  },
+  "homepage": "https://github.com/rioriost/skills/tree/main/plugins/app-store-review-preflight",
+  "repository": "https://github.com/rioriost/skills",
+  "license": "MIT",
+  "keywords": ["app-store", "app-review", "apple", "preflight", "ios", "macos"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "App Store Review Preflight",
+    "shortDescription": "Audit App Store submissions before review",
+    "longDescription": "Inspect App Store Connect and a local Apple-platform project against the current official App Review Guidelines, then report blockers, warnings, and manual confirmations without submitting the app.",
+    "developerName": "Rio Fujita",
+    "category": "Productivity",
+    "capabilities": ["Read"],
+    "websiteURL": "https://github.com/rioriost/skills/tree/main/plugins/app-store-review-preflight",
+    "defaultPrompt": [
+      "Audit my App Store submission and stop before submitting it.",
+      "Check App Store Connect and my local project for likely review blockers.",
+      "App Store Connectの提出内容を監査し、提出操作の直前で止めてください。"
+    ]
+  }
+}

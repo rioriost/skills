@@ -1,0 +1,20 @@
+{
+  "name": "rioriost-skills",
+  "interface": {
+    "displayName": "Rio's Skills"
+  },
+  "plugins": [
+    {
+      "name": "app-store-review-preflight",
+      "source": {
+        "source": "local",
+        "path": "./plugins/app-store-review-preflight"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
