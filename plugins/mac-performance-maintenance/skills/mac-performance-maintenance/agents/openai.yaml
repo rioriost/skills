@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mac Performance Maintenance"
+  short_description: "Diagnose Mac performance and cleanup opportunities"
+  default_prompt: "Use $mac-performance-maintenance to run a read-only health audit of this Mac and recommend safe next steps."
