@@ -1,0 +1,28 @@
+{
+  "name": "mac-performance-maintenance",
+  "version": "0.1.0",
+  "description": "Safely diagnose Mac performance and storage, then plan explicitly approved cleanup.",
+  "author": {
+    "name": "Rio Fujita",
+    "url": "https://github.com/rioriost"
+  },
+  "homepage": "https://github.com/rioriost/skills/tree/main/plugins/mac-performance-maintenance",
+  "repository": "https://github.com/rioriost/skills",
+  "license": "MIT",
+  "keywords": ["macos", "apple-silicon", "performance", "storage", "maintenance", "diagnostics"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Mac Performance Maintenance",
+    "shortDescription": "Diagnose Mac performance and cleanup opportunities",
+    "longDescription": "Audit an Apple Silicon Mac's storage, memory, CPU, background items, developer tools, containers, virtual machines, and battery state without changing the system, then rank safe next steps and require approval before cleanup.",
+    "developerName": "Rio Fujita",
+    "category": "Productivity",
+    "capabilities": ["Read"],
+    "websiteURL": "https://github.com/rioriost/skills/tree/main/plugins/mac-performance-maintenance",
+    "defaultPrompt": [
+      "Run a read-only health audit of this Mac and rank safe cleanup opportunities.",
+      "Diagnose why this Mac is slow without changing or deleting anything.",
+      "このMacを読み取り専用で診断し、安全な改善候補を優先順位付きで示してください。"
+    ]
+  }
+}
