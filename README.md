@@ -1,6 +1,6 @@
 # Rio's Codex Skills
 
-Reusable skills and skill-only plugins for Codex.
+Reusable skills and skill-only plugins for Codex, with standalone Markdown imports for Zed.
 
 ## Available plugins
 
@@ -38,6 +38,28 @@ An audit request does not authorize cleanup. For example, after reviewing the re
 Approve cleanup of the Homebrew cache preview only. Do not clean container
 images, volumes, Simulator data, VM bundles, or any other target.
 ```
+
+### Apple HIG Design
+
+`design-with-apple-hig` designs, implements and reviews Apple-platform interfaces using current primary sources. It separates HIG guidance, SDK requirements, App Review policy, observed behavior and heuristic advice; routes iOS, iPadOS, macOS, watchOS, tvOS and visionOS; and verifies builds, actual screenshots, accessibility, Dynamic Type, VoiceOver-relevant limits, keyboard/focus and Reduce Motion.
+
+The [complete plugin](plugins/design-with-apple-hig/skills/design-with-apple-hig/SKILL.md) preserves the tested skill from [rioriost/design-with-apple-hig](https://github.com/rioriost/design-with-apple-hig), including its references, source reader and 20 regression tests. [SOURCE.json](plugins/design-with-apple-hig/SOURCE.json) records the exact revision and file digests. The original [Sunwood AI Labs MIT notice](plugins/design-with-apple-hig/LICENSE) is retained.
+
+### Import Apple HIG Design into Zed by URL
+
+In Zed, run **agent: create skill from url**, paste the following URL, review the imported skill, and save it in the User scope for use across projects:
+
+```text
+https://github.com/rioriost/skills/blob/main/zed/design-with-apple-hig/SKILL.md
+```
+
+This is the [standalone Zed edition](zed/design-with-apple-hig/SKILL.md). A Markdown URL import should not assume adjacent reference files or scripts are installed. This edition includes the essential workflow in one file, requires no Codex-specific tools or downloaded helpers, and retains MIT attribution inside the file. It is a portable adaptation, not a byte-for-byte copy of the complete edition.
+
+After saving, select `/design-with-apple-hig` from the Agent Panel's slash-command menu and describe the app/design task. Importing saves a local skill; it is not a live subscription to this repository. Re-import to pick up future changes. If you already installed a skill with this name, inspect the existing entry before replacing it; you only need one edition per scope.
+
+Zed's native skills apply to Zed Agent. External ACP agents use their own native skill configuration. See [Zed Skills](https://zed.dev/docs/ai/skills) for the current import behavior.
+
+日本語: Zedの **agent: create skill from url** に上記URLを貼り付け、内容を確認してUserスコープへ保存します。参照ファイルやスクリプトを別途取得しなくても使える単一ファイル版です。完全版をフォルダーごと導入済みの場合は、同名スキルを上書きする前に内容を確認してください。
 
 ## Install
 
@@ -100,6 +122,20 @@ Use `--quick` to skip the broad `~/Library` size crawl during a fast first pass,
 
 The script writes its report to standard output. It performs no cleanup, writes no report file, starts no inactive runtime, and does not use `sudo`.
 
+## Validate Apple HIG packaging
+
+Run from this repository root with Python 3.10 or later:
+
+```sh
+python3 scripts/validate_apple_hig.py
+python3 plugins/design-with-apple-hig/skills/design-with-apple-hig/scripts/validate_repository.py
+python3 -m unittest discover -s plugins/design-with-apple-hig/skills/design-with-apple-hig/tests -v
+```
+
+These offline checks verify provenance, standalone resource independence and the full edition's helper behavior. They do not certify UI quality, VoiceOver behavior or execution by Zed's agent. Native app verification happens when applying the skill to an app. GitHub Actions runs these checks on Python 3.10, 3.12 and 3.13.
+
+To refresh the complete edition, select a reviewed source revision, replace its bundled files, update `SOURCE.json`, and review the standalone adaptation against changed instructions before running the checks. Do not silently update digests without reviewing source changes.
+
 ## Important notes
 
 - Apple changes its requirements over time. The skill refreshes current official Apple sources during each audit rather than treating its bundled matrix as authoritative.
@@ -111,4 +147,4 @@ The script writes its report to standard output. It performs no cleanup, writes 
 
 ## License
 
-MIT License. See [LICENSE](LICENSE).
+MIT License. See [LICENSE](LICENSE). The Apple HIG plugin also retains the original [Sunwood AI Labs license](plugins/design-with-apple-hig/LICENSE); its standalone adaptation carries both notices. Apple materials remain subject to their own terms.
