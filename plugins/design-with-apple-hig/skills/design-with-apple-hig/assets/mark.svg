@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Apple HIG Design Skill mark</title>
+  <desc id="desc">An abstract interface frame with a centered guide point</desc>
+  <defs>
+    <linearGradient id="surface" x1="18" y1="12" x2="110" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7DD3FC"/>
+      <stop offset="0.5" stop-color="#818CF8"/>
+      <stop offset="1" stop-color="#C084FC"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="112" height="112" rx="30" fill="#0B1020"/>
+  <rect x="23" y="25" width="82" height="78" rx="18" fill="none" stroke="url(#surface)" stroke-width="8"/>
+  <path d="M42 48h44M42 64h25M42 80h16" fill="none" stroke="#E5E7EB" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="86" cy="80" r="12" fill="url(#surface)"/>
+</svg>

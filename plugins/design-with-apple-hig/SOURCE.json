@@ -1,0 +1,28 @@
+{
+  "repository": "https://github.com/rioriost/design-with-apple-hig",
+  "revision": "f255927832c5b367df3e5c8460db4009296c0a5b",
+  "merged_revision": "50f54da59c70ab34482b5ec566105d0a566363d2",
+  "upstream": "https://github.com/Sunwood-ai-labs/design-with-apple-hig",
+  "sha256": {
+    "LICENSE": "ff2c0ccc04836f79dde1c4b4a331d2c08fa5b4f59978e667a1ed3c068e695c59",
+    "README.ja.md": "288ff145a667dac508147477df49da8481dd41585723c3fdbebdb9c67f4f0151",
+    "README.md": "f0cf481d2b6b98d63bbcd93b983e67e0a3552ddae076ad81d0e0f2eb1155c2ba",
+    "SKILL.md": "1968940883dc81d404f30a4316309de55d18b368b96f40eafa941b6ebd336f42",
+    "agents/openai.yaml": "2e5e057bbbc8d11b7c133715fc5b48cae17d7dcd75de617cea28590126217ca6",
+    "assets/mark.svg": "a67311193b8ba5a0769b228af033f59ac76fa644c88f40f67a05208d16e2e352",
+    "references/bibliography.md": "d47cb16515e413fa08edcdad63862683f78a2e6e2b6118acc3762bf144252fb7",
+    "references/codex-workflows.md": "0db4036c4f20c4c7eb46e1fea4fe5420845027e00abb30e4fd05908b4d34e821",
+    "references/freshness.md": "dd698c1d6f917648048a535e320643afbd7fcdae4b057d5b0bc88f5f46f0e4e2",
+    "references/official-source-map.md": "196d2c623a971c83ccd4e37f5b31d470607baf4071725b873f84046ef7bda6b7",
+    "references/platform-routing.md": "fa8eac65970d60714d58440b1d14b02750b8cfa5e02bd63fe322b23e2cc0ce2d",
+    "references/regression-scenarios.md": "98ae5117cdedc6e77ea6b08e6c116bd7fb3a6a27e693604e46588cae5689ce86",
+    "references/review-record-template.md": "7f59b0c78006451117825e756350c1f99aa438cb397ceb06a159d6c9c10caee0",
+    "references/review-rubric.md": "5d8183996ee93c00b2c6b4a3a6bb39726e2377c5b7f404aac4b578edb63ff3b0",
+    "references/source-routing.md": "e06ca9490be0922a3acf57bf83fbea85086e76b4a962ad62ef99e98709fb8602",
+    "references/verification-loop.md": "83d0dbcf0e3eef00c0535e956485f66622a875ad7eb11182b229b58af75fc04a",
+    "scripts/fetch_apple_hig.py": "e2301ef44964cc9a88473c250d49ac15e9e210dddd5991653e185127b7df9942",
+    "scripts/validate_repository.py": "e3dbe46a4515aa0d5fd96d708af6dfa320de7b4d44a8f1fa9182086fce63aaa6",
+    "tests/test_fetch_apple_hig.py": "f0dae4b5cf40a6d7db87a590dbaa5c979e9a9892f74bd836909f8bfd4a1b161d",
+    "tests/test_validate_repository.py": "64a5465731760444e31e19a80167e12d9a6b9cb35a8b274c5a3f6b8cfd14f99e"
+  }
+}

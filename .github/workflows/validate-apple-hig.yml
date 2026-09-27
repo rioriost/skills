@@ -1,0 +1,40 @@
+name: Validate Apple HIG skill
+
+on:
+  push:
+    paths:
+      - 'plugins/design-with-apple-hig/**'
+      - 'zed/design-with-apple-hig/**'
+      - 'scripts/validate_apple_hig.py'
+      - '.agents/plugins/marketplace.json'
+      - '.github/workflows/validate-apple-hig.yml'
+  pull_request:
+    paths:
+      - 'plugins/design-with-apple-hig/**'
+      - 'zed/design-with-apple-hig/**'
+      - 'scripts/validate_apple_hig.py'
+      - '.agents/plugins/marketplace.json'
+      - '.github/workflows/validate-apple-hig.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Validate provenance and URL-import packaging
+        run: python scripts/validate_apple_hig.py
+      - name: Validate full skill structure and links
+        run: python plugins/design-with-apple-hig/skills/design-with-apple-hig/scripts/validate_repository.py
+      - name: Run source reader regression tests
+        run: python -m unittest discover -s plugins/design-with-apple-hig/skills/design-with-apple-hig/tests -v
+      - name: Check reader CLI
+        run: python plugins/design-with-apple-hig/skills/design-with-apple-hig/scripts/fetch_apple_hig.py --help

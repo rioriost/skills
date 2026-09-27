@@ -1,0 +1,38 @@
+{
+  "name": "design-with-apple-hig",
+  "version": "0.1.0",
+  "description": "Design and review Apple-platform interfaces using current HIG sources and evidence-backed validation.",
+  "author": {
+    "name": "Rio Fujita",
+    "url": "https://github.com/rioriost"
+  },
+  "homepage": "https://github.com/rioriost/skills/tree/main/plugins/design-with-apple-hig",
+  "repository": "https://github.com/rioriost/skills",
+  "license": "MIT",
+  "keywords": [
+    "apple",
+    "hig",
+    "design",
+    "accessibility",
+    "ios",
+    "macos",
+    "zed"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Apple HIG Design",
+    "shortDescription": "Design and validate Apple interfaces from primary sources",
+    "longDescription": "Apply current Apple Human Interface Guidelines across Apple platforms, preserve source scope and wording strength, and verify build, rendering, accessibility and input behavior. Includes the original evidence-first skill and a standalone Zed URL-import edition.",
+    "developerName": "Rio Fujita",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/rioriost/skills/tree/main/plugins/design-with-apple-hig",
+    "defaultPrompt": [
+      "Review this Apple app with current HIG evidence and explicit validation limits.",
+      "このAppleアプリのUIを、最新のHIGと実装後の検証手順に沿ってレビューしてください。"
+    ]
+  }
+}
