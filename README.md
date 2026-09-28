@@ -61,6 +61,27 @@ Zed's native skills apply to Zed Agent. External ACP agents use their own native
 
 日本語: Zedの **agent: create skill from url** に上記URLを貼り付け、内容を確認してUserスコープへ保存します。参照ファイルやスクリプトを別途取得しなくても使える単一ファイル版です。完全版をフォルダーごと導入済みの場合は、同名スキルを上書きする前に内容を確認してください。
 
+### Import Mac Performance Maintenance into Zed by URL
+
+Run **agent: create skill from url**, paste this URL, review the content, and save it in the **User** scope to use it across projects:
+
+```text
+https://github.com/rioriost/skills/blob/main/zed/mac-performance-maintenance/SKILL.md
+```
+
+The [standalone Mac edition](zed/mac-performance-maintenance/SKILL.md) includes the diagnostic workflow, read-only command examples, coverage guidance, approval boundaries, before/after verification and MIT notice in one file. It needs no bundled audit script or downloaded helper. Zed Agent uses its available local tools to perform the relevant checks; importing the file does not itself run an audit. The complete Codex plugin and its audit script remain available separately.
+
+Select `/mac-performance-maintenance` in the Agent Panel, then describe the symptom. For example:
+
+```text
+このMacを読み取り専用で診断し、改善候補を優先順位付きで示してください。
+削除、設定変更、停止中のVMやコンテナの起動は行わないでください。
+```
+
+The same [Zed import and scope rules](https://zed.dev/docs/ai/skills) described above apply. Check for an existing skill with the same name before replacing it, and re-import when you want updates. External ACP agents use their own skill configuration.
+
+日本語: 上記URLから取り込み、Userスコープへ保存すると各プロジェクトで利用できます。診断のみでは削除や設定変更を行わず、具体的な対象への明示的な承認がある場合だけ実行します。
+
 ## Install
 
 Add this repository as a Codex plugin marketplace:
@@ -122,7 +143,15 @@ Use `--quick` to skip the broad `~/Library` size crawl during a fast first pass,
 
 The script writes its report to standard output. It performs no cleanup, writes no report file, starts no inactive runtime, and does not use `sudo`.
 
-## Validate Apple HIG packaging
+## Validate skill packaging
+
+Validate all standalone Zed editions with Python 3.10 or later:
+
+```sh
+python3 scripts/validate_zed_skills.py
+```
+
+This offline check validates skill metadata, size, Markdown resource links, embedded MIT notices and shell-example syntax without executing diagnostics. It does not establish agent behavior or successful import in Zed's UI. The dedicated Zed packaging workflow runs it when standalone editions change. When updating the Mac plugin, review the single-file edition against the source workflow and coverage before publication; the two editions are maintained explicitly rather than synchronized automatically.
 
 Run from this repository root with Python 3.10 or later:
 
