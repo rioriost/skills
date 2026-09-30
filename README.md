@@ -4,6 +4,16 @@ Reusable skills and skill-only plugins for Codex, with standalone Markdown impor
 
 ## Available plugins
 
+### Service Signup Risk Assessment
+
+`assess-service-signup` evaluates whether to register for a service before sharing personal information. It researches registration requirements, retention and deletion, software support and maintenance, known-vulnerability applicability, and incident response using current public sources.
+
+The [complete skill](plugins/assess-service-signup/skills/assess-service-signup/SKILL.md) includes the [rating rubric](plugins/assess-service-signup/skills/assess-service-signup/references/rating-rubric.md), [research guide](plugins/assess-service-signup/skills/assess-service-signup/references/research-guide.md), and [report format](plugins/assess-service-signup/skills/assess-service-signup/references/report-template.md). It combines the impact of disclosed information with evidence of safeguards and returns a recommendation from **5 (registration recommended)** to **1 (avoid registration)**, alongside evidence confidence and conditions for reassessment.
+
+The assessment distinguishes confirmed facts, operator statements, inference, and unknowns. It considers extended support and backported fixes, treats missing technical details as uncertainty, and avoids attributing a breach to a framework without evidence. Identity-document images and other hard-to-recover information warrant a more cautious rating. The workflow uses public research only: it does not scan services, reproduce vulnerabilities, create accounts, or request personal data values. Ratings support signup decisions; they do not predict breach probability or guarantee safety.
+
+日本語名は「登録前の個人情報リスク診断」です。サービス名または公式URLを添えて評価を依頼すると、個人情報の種類、技術と保守の根拠、既知の問題、事故対応を確認し、5段階の判断と未確認事項を返します。
+
 ### App Store Review Preflight
 
 `app-store-review-preflight` audits an Apple App Store submission before review. It checks the current official App Review Guidelines, App Store Connect metadata, and evidence from a local iOS, iPadOS, macOS, tvOS, visionOS, or watchOS project or built app.
@@ -93,6 +103,16 @@ codex plugin marketplace add rioriost/skills
 Then open the Plugins Directory, select **Rio's Skills**, and install the plugin you need.
 
 ## Example prompts
+
+```text
+Use Service Signup Risk Assessment to evaluate whether I should register
+for this service: <service name or official URL>.
+```
+
+```text
+登録前の個人情報リスク診断で、次のサービスに登録してよいか評価してください。
+対象：<サービス名または公式URL>
+```
 
 ```text
 Use App Store Review Preflight to audit the App Store Connect submission

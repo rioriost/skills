@@ -1,0 +1,37 @@
+{
+  "name": "assess-service-signup",
+  "version": "0.1.0",
+  "description": "Evaluate signup privacy risks and public security evidence before sharing personal information with a service.",
+  "author": {
+    "name": "Rio Fujita",
+    "url": "https://github.com/rioriost"
+  },
+  "homepage": "https://github.com/rioriost/skills/tree/main/plugins/assess-service-signup",
+  "repository": "https://github.com/rioriost/skills",
+  "license": "MIT",
+  "keywords": [
+    "privacy",
+    "security",
+    "signup",
+    "personal-information",
+    "maintenance",
+    "risk-assessment"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Service Signup Risk Assessment",
+    "shortDescription": "Assess signup privacy risk",
+    "longDescription": "Assess the personal information required by a service, software maintenance and known-vulnerability evidence, and incident response using public sources. Return a five-level signup recommendation with evidence confidence, unresolved questions, and conditions for reassessment. Do not scan services or reproduce vulnerabilities.",
+    "developerName": "Rio Fujita",
+    "category": "Productivity",
+    "capabilities": [
+      "Read"
+    ],
+    "websiteURL": "https://github.com/rioriost/skills/tree/main/plugins/assess-service-signup",
+    "defaultPrompt": [
+      "Use Service Signup Risk Assessment to evaluate whether I should register for this service.",
+      "Compare these services by the personal information they require and the public evidence for their security and maintenance.",
+      "登録前の個人情報リスク診断で、このサービスに登録してよいか5段階で評価してください。"
+    ]
+  }
+}

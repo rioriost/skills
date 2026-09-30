@@ -1,0 +1,4 @@
+interface:
+  display_name: "登録前の個人情報リスク診断"
+  short_description: "登録する個人情報と公開された保守・脆弱性情報から利用を5段階で判断"
+  default_prompt: "$assess-service-signup を使って、このサービスに登録してよいか、個人情報と技術・運用の公開情報から5段階で評価してください。"
