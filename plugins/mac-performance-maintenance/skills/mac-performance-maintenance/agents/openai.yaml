@@ -1,4 +1,7 @@
 interface:
   display_name: "Mac Performance Maintenance"
-  short_description: "Diagnose Mac performance and cleanup opportunities"
-  default_prompt: "Use $mac-performance-maintenance to run a read-only health audit of this Mac and recommend safe next steps."
+  short_description: "Review Mac health and obsolete developer artifacts"
+  default_prompt: "Use $mac-performance-maintenance to review this Mac read-only and identify obsolete developer artifacts with retention and recreation evidence."
+
+policy:
+  allow_implicit_invocation: true

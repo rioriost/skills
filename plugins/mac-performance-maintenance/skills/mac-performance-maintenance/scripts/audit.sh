@@ -93,12 +93,6 @@ run_with_timeout() {
   return "$_command_status"
 }
 
-help_has_subcommand() {
-  _help_text="$1"
-  _subcommand="$2"
-  printf '%s\n' "$_help_text" | grep -Eq "^[[:space:]]*${_subcommand}\\*?([,[:space:]]|$)"
-}
-
 humanize_kib() {
   awk '
     function human(kib) {
@@ -123,8 +117,11 @@ show_paths() {
   _found=0
   for _path in "$@"; do
     if [ -e "$_path" ]; then
-      _size=$(du -sk "$_path" 2>/dev/null)
-      if [ -n "$_size" ]; then
+      _size=$(du -sk "$_path")
+      _size_status=$?
+      if [ "$_size_status" -ne 0 ]; then
+        printf '%10s  %s\n' "UNKNOWN" "$_path (partial or unreadable; du exit $_size_status)"
+      elif [ -n "$_size" ]; then
         printf '%s\n' "$_size" | humanize_kib
       else
         printf '%10s  %s\n' "UNKNOWN" "$_path (not fully readable)"
@@ -308,122 +305,17 @@ else
 fi
 
 section "Container runtimes"
-if have docker; then
-  run_readonly "Docker version" docker --version
-  _docker_help=$(docker --help 2>&1)
-  if help_has_subcommand "$_docker_help" "desktop"; then
-    _docker_desktop_help=$(docker desktop --help 2>&1)
-    if help_has_subcommand "$_docker_desktop_help" "status"; then
-      run_readonly "Docker Desktop status" docker desktop status
-    fi
+# Version/help queries do not select a remote endpoint or query a daemon.
+# The agent must verify locality and active state before deeper inventories.
+for _runtime in docker podman container; do
+  if have "$_runtime"; then
+    run_readonly "$_runtime CLI version" "$_runtime" --version
+    run_readonly "$_runtime CLI capabilities" "$_runtime" --help
+  else
+    printf '%s CLI: not installed\n' "$_runtime"
   fi
-  if help_has_subcommand "$_docker_help" "context"; then
-    _docker_context_help=$(docker context --help 2>&1)
-    if help_has_subcommand "$_docker_context_help" "list" || help_has_subcommand "$_docker_context_help" "ls"; then
-      run_readonly "Docker contexts" docker context ls
-    fi
-  fi
-  if help_has_subcommand "$_docker_help" "system"; then
-    _docker_system_help=$(docker system --help 2>&1)
-    if help_has_subcommand "$_docker_system_help" "df"; then
-      run_readonly "Docker disk usage" docker system df
-    fi
-  fi
-  if help_has_subcommand "$_docker_help" "container"; then
-    run_readonly "Docker containers" docker container ls --all --size
-  fi
-else
-  printf '%s\n' "Docker CLI: not installed"
-fi
-
-if have podman; then
-  run_readonly "Podman version" podman --version
-  _podman_help=$(podman --help 2>&1)
-  if help_has_subcommand "$_podman_help" "machine"; then
-    _podman_machine_help=$(podman machine --help 2>&1)
-    if help_has_subcommand "$_podman_machine_help" "list"; then
-      run_readonly "Podman machines" podman machine list
-    fi
-  fi
-  if help_has_subcommand "$_podman_help" "system"; then
-    _podman_system_help=$(podman system --help 2>&1)
-    if help_has_subcommand "$_podman_system_help" "connection"; then
-      _podman_connection_help=$(podman system connection --help 2>&1)
-      if help_has_subcommand "$_podman_connection_help" "list"; then
-        run_readonly "Podman connections" podman system connection list
-      fi
-    fi
-    if help_has_subcommand "$_podman_system_help" "df"; then
-      run_readonly "Podman disk usage" podman system df
-    fi
-  fi
-  if help_has_subcommand "$_podman_help" "container"; then
-    run_readonly "Podman containers" podman container ls --all --size
-  fi
-else
-  printf '%s\n' "Podman CLI: not installed"
-fi
-
-if have container; then
-  run_readonly "Apple Container version" container --version
-  _container_help=$(container --help 2>&1)
-
-  if help_has_subcommand "$_container_help" "system"; then
-    _container_system_help=$(container system --help 2>&1)
-    if help_has_subcommand "$_container_system_help" "status"; then
-      run_readonly "Apple Container service status" container system status
-    fi
-    if help_has_subcommand "$_container_system_help" "df"; then
-      run_readonly "Apple Container disk usage" container system df
-    fi
-  fi
-
-  if help_has_subcommand "$_container_help" "list"; then
-    _container_list_help=$(container list --help 2>&1)
-    if printf '%s\n' "$_container_list_help" | grep -Eq -- '(^|[[:space:]])-a,?[[:space:]]+--all|--all'; then
-      run_readonly "Apple containers" container list --all
-    else
-      run_readonly "Running Apple containers" container list
-    fi
-  fi
-
-  if help_has_subcommand "$_container_help" "image"; then
-    _container_image_help=$(container image --help 2>&1)
-    if help_has_subcommand "$_container_image_help" "list"; then
-      run_readonly "Apple Container images" container image list
-    fi
-  fi
-
-  if help_has_subcommand "$_container_help" "volume"; then
-    _container_volume_help=$(container volume --help 2>&1)
-    if help_has_subcommand "$_container_volume_help" "list"; then
-      run_readonly "Apple Container volumes" container volume list
-    fi
-  fi
-
-  if help_has_subcommand "$_container_help" "machine"; then
-    _container_machine_help=$(container machine --help 2>&1)
-    if help_has_subcommand "$_container_machine_help" "list"; then
-      run_readonly "Apple container machines" container machine list
-    fi
-  fi
-
-  if help_has_subcommand "$_container_help" "network"; then
-    _container_network_help=$(container network --help 2>&1)
-    if help_has_subcommand "$_container_network_help" "list"; then
-      run_readonly "Apple Container networks" container network list
-    fi
-  fi
-
-  if help_has_subcommand "$_container_help" "builder"; then
-    _container_builder_help=$(container builder --help 2>&1)
-    if help_has_subcommand "$_container_builder_help" "status"; then
-      run_readonly "Apple Container builder status" container builder status
-    fi
-  fi
-else
-  printf '%s\n' "Apple Container CLI: not installed"
-fi
+done
+note "UNKNOWN: daemon-dependent inventory deferred. Verify a local endpoint and already active runtime before querying it; do not start it for this audit."
 
 show_paths "Focused container storage paths" \
   "$HOME/Library/Containers/com.docker.docker" \
@@ -435,37 +327,14 @@ show_paths "Focused container storage paths" \
   "$HOME/Library/Application Support/com.apple.container"
 
 section "Virtual machines"
-if have prlctl; then
-  run_readonly "Parallels version" prlctl --version
-  run_readonly "Parallels VM inventory" prlctl list --all
-else
-  printf '%s\n' "Parallels CLI: not installed"
-fi
-
-if have utmctl; then
-  _utm_help=$(utmctl --help 2>&1)
-  if help_has_subcommand "$_utm_help" "version"; then
-    run_readonly "UTM version" utmctl version
-  fi
-  if help_has_subcommand "$_utm_help" "list"; then
-    run_readonly "UTM VM inventory" utmctl list
+for _vm_tool in prlctl utmctl limactl colima VBoxManage; do
+  if have "$_vm_tool"; then
+    printf '%s CLI: available; VM inventory deferred\n' "$_vm_tool"
   else
-    label "UTM VM inventory"
-    printf '%s\n' "UNKNOWN (installed utmctl help does not advertise list)"
+    printf '%s CLI: not installed\n' "$_vm_tool"
   fi
-else
-  printf '%s\n' "UTM CLI: not installed"
-fi
-
-if have limactl; then
-  run_readonly "Lima VM inventory" limactl list
-fi
-if have colima; then
-  run_readonly "Colima status" colima status
-fi
-if have VBoxManage; then
-  run_readonly "VirtualBox VM inventory" VBoxManage list vms
-fi
+done
+note "UNKNOWN: VM state not queried. Establish that an owning app/service is already active before supported read-only enumeration."
 
 show_paths "Focused VM storage paths" \
   "$HOME/Parallels" \
@@ -478,8 +347,12 @@ section "Large Library directories"
 if [ "$QUICK" -eq 1 ]; then
   printf '%s\n' "Skipped in --quick mode."
 else
-  note "This crawl can take time. Inaccessible directories are omitted rather than treated as zero."
-  du -sk "$HOME/Library"/* 2>/dev/null | sort -nr | head -n "$TOP_N" | humanize_kib
+  note "This crawl can take time; errors remain visible and incomplete totals are not reclaimable-space estimates."
+  du -sk "$HOME/Library"/* | sort -nr | head -n "$TOP_N" | humanize_kib
+  _library_status=${PIPESTATUS[0]}
+  if [ "$_library_status" -ne 0 ]; then
+    note "UNKNOWN: Library crawl incomplete (du exit $_library_status); displayed totals may be lower bounds."
+  fi
 fi
 
 section "Battery"
