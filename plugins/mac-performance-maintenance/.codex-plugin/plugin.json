@@ -1,7 +1,7 @@
 {
   "name": "mac-performance-maintenance",
-  "version": "0.1.0",
-  "description": "Safely diagnose Mac performance and storage, then plan explicitly approved cleanup.",
+  "version": "0.2.0",
+  "description": "Diagnose Mac performance and review developer artifacts using provenance, retained builds and recreation evidence.",
   "author": {
     "name": "Rio Fujita",
     "url": "https://github.com/rioriost"
@@ -9,15 +9,24 @@
   "homepage": "https://github.com/rioriost/skills/tree/main/plugins/mac-performance-maintenance",
   "repository": "https://github.com/rioriost/skills",
   "license": "MIT",
-  "keywords": ["macos", "apple-silicon", "performance", "storage", "maintenance", "diagnostics"],
+  "keywords": [
+    "macos",
+    "apple-silicon",
+    "performance",
+    "storage",
+    "maintenance",
+    "diagnostics"
+  ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Mac Performance Maintenance",
     "shortDescription": "Diagnose Mac performance and cleanup opportunities",
-    "longDescription": "Audit an Apple Silicon Mac's storage, memory, CPU, background items, developer tools, containers, virtual machines, and battery state without changing the system, then rank safe next steps and require approval before cleanup.",
+    "longDescription": "Audit an Apple Silicon Mac without cleanup side effects, then review developer artifacts by source, build results, active consumers and recreation evidence. Preserve successful builds, releases and matching symbols; execute only specifically authorized cleanup.",
     "developerName": "Rio Fujita",
     "category": "Productivity",
-    "capabilities": ["Read"],
+    "capabilities": [
+      "Read"
+    ],
     "websiteURL": "https://github.com/rioriost/skills/tree/main/plugins/mac-performance-maintenance",
     "defaultPrompt": [
       "Run a read-only health audit of this Mac and rank safe cleanup opportunities.",

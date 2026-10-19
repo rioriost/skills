@@ -1,0 +1,33 @@
+name: Validate Mac maintenance skill
+
+on:
+  push:
+    paths:
+      - 'plugins/mac-performance-maintenance/**'
+      - 'zed/mac-performance-maintenance/**'
+      - 'tests/test_mac_maintenance.py'
+      - '.github/workflows/validate-mac-maintenance.yml'
+  pull_request:
+    paths:
+      - 'plugins/mac-performance-maintenance/**'
+      - 'zed/mac-performance-maintenance/**'
+      - 'tests/test_mac_maintenance.py'
+      - '.github/workflows/validate-mac-maintenance.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: bash -n plugins/mac-performance-maintenance/skills/mac-performance-maintenance/scripts/audit.sh
+      - run: python -m unittest discover -s tests -p test_mac_maintenance.py -v
+      - run: python scripts/validate_zed_skills.py

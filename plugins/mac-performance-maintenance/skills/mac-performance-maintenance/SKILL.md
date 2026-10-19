@@ -1,6 +1,6 @@
 ---
 name: mac-performance-maintenance
-description: Diagnose and maintain Apple Silicon Macs safely. Use when Codex needs to investigate a slow Mac, low SSD space, memory pressure or swap, high CPU load, background/login items, Time Machine local snapshots, Xcode and Simulator data, Homebrew, Docker, Podman, Apple Container, Parallels, UTM, other local VMs, large Library folders, or MacBook battery health; rank cleanup opportunities; or carry out a specifically approved cleanup. Default to a read-only audit, detect volatile CLI capabilities from local help before use, and require explicit approval before any deletion or configuration change.
+description: Diagnose and maintain Apple Silicon Macs safely. Use when Codex needs to investigate a slow Mac, low SSD space, memory pressure or swap, high CPU load, background/login items, Time Machine local snapshots, Xcode and Simulator data, Homebrew, Docker, Podman, Apple Container, Parallels, UTM, other local VMs, large Library folders, or MacBook battery health; review old developer binaries, intermediate files and logs using provenance and retention evidence; rank cleanup opportunities; or carry out a specifically approved cleanup. Default to a read-only audit, detect volatile CLI capabilities from local help before use, and require explicit approval before any deletion or configuration change.
 ---
 
 # Mac Performance Maintenance
@@ -24,11 +24,13 @@ Confirm whether the user wants diagnosis only or has already requested cleanup. 
 
 ### 2. Run the read-only audit
 
-Run the bundled script from the skill directory:
+For a general health audit, run the bundled script from its actual skill directory (not the current project directory):
 
 ```bash
 /bin/bash scripts/audit.sh
 ```
+
+Before running, verify the script exists. If an installation contains only this file, report the incomplete installation and use focused read-only checks; do not blindly execute a missing relative path or fetch and run a remote script. A focused artifact review can skip the general audit and measure only its relevant owners.
 
 Use `--quick` only when the user needs a faster first pass; it skips the broad `~/Library` size crawl while retaining focused checks. The script performs no deletion, writes no files, starts no service, and requests no elevated privileges.
 
@@ -54,6 +56,18 @@ Use thresholds as prompts for investigation, not universal guarantees:
 
 Rank findings by likely impact and recoverability. For every proposed action, show the observed size or load, what would be removed or disabled, expected benefit, risk, and whether it can be recreated.
 
+### Developer artifacts: establish what is still needed
+
+When reviewing build products, intermediate binaries, dependencies or logs, read
+[Developer artifact review](references/developer-artifacts.md). Connect each item
+to its source/worktree, build configuration, result and consumers. Identify the
+last successful build in each relevant group and retain release, rollback and
+matching debug-symbol assets. Verify recreation inputs; do not infer safe removal
+from age, size, Git ignore status or a newer file alone. Logs can be disposable but
+historically irreplaceable. Record each target as `CANDIDATE`, `KEEP` or
+`UNRESOLVED`, with evidence, retained counterparts and recreation limits. These
+are artifact decisions, not authorization to delete.
+
 ### 4. Propose a cleanup plan
 
 End a diagnosis-only run with recommendations; do not execute them. Group candidates as:
@@ -66,7 +80,7 @@ Prefer the owning tool's supported cleanup command over deleting its storage dir
 
 ### 5. Obtain approval and clean only the approved scope
 
-Before each destructive group, present the exact command or UI action and its targets. Obtain explicit user approval after the plan is visible. Approval for one target does not authorize adjacent targets.
+Before each destructive group, present the exact command or UI action and its targets. Use existing user authorization when it already covers the concrete targets and consequences; otherwise obtain explicit approval after the plan is visible. Approval for one target does not authorize adjacent targets. Refresh active use, target identity and retained counterparts immediately before acting; skip targets whose evidence or scope changed.
 
 Record before metrics, perform only the approved operation, preserve failures for review, and do not widen scope automatically. If the installed command differs from the plan, stop and re-propose it.
 
@@ -79,5 +93,6 @@ Rerun the relevant audit sections, or the full audit when practical. Report recl
 - Apple Silicon and macOS are the supported baseline. Report a non-Apple-Silicon or non-macOS host as unsupported rather than guessing.
 - On Mac notebooks, include battery power and health evidence. On desktop Macs, mark battery checks not applicable.
 - Do not start Docker Desktop, Podman machines, Apple Container services, Parallels VMs, UTM VMs, or other dormant runtimes merely to inspect them.
+- The script collects passive CLI metadata and offline storage sizes. It deliberately defers daemon-dependent container/VM inventories to the agent, which must first establish a local endpoint and an already active runtime without launching it.
 - Use the focused developer and VM directory sizes as signals. Do not delete bundles or internal runtime files directly.
 - Avoid sharing raw audit output publicly without review because process names, paths, VM names, and background items can reveal local project or organization details.

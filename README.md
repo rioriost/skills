@@ -34,6 +34,10 @@ Findings are classified as `BLOCKER`, `WARNING`, `MANUAL`, `PASS`, `NOT APPLICAB
 
 The bundled audit script never deletes data, starts or stops services, changes settings, or requests elevated privileges. Volatile tools such as Apple Container are inspected only after detecting the commands advertised by the locally installed CLI. Cleanup remains a separate, explicitly approved step.
 
+Developer artifact review also connects intermediate files, binaries and logs to their project, source commit, build configuration and consumers. It retains the last evidenced successful build per relevant group, released/rollback assets and matching dSYMs, then records each candidate as `CANDIDATE`, `KEEP` or `UNRESOLVED` with recreation evidence. Logs are assessed as historical evidence, not assumed reproducible. See the [review procedure](plugins/mac-performance-maintenance/skills/mac-performance-maintenance/references/developer-artifacts.md).
+
+Install the **whole skill folder**, including `scripts/`, `references/` and `agents/`; copying only `SKILL.md` leaves the audit unavailable. For an existing standalone installation, back up the old folder and copy the complete reviewed folder into the same discovery location. Preserve any local invocation policy or customizations. Verify the installed files against the source and run the installed script with `--help` before use. The single-file Zed edition remains self-contained.
+
 #### Recommended workflow
 
 1. Install **Mac Performance Maintenance** from this marketplace.
